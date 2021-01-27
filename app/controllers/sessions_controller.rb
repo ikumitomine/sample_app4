@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase) # 送信されたメールアドレスをキーにしてユーザーを特定する
     if user && user.authenticate(params[:session][:password]) # 特定したユーザかつ、DBに保存してあるそのユーザーのパスワードが正しいものであれば、
-      user.login
-      redirect_to users_show_path
+      log_in(user)
+      redirect_to user
     else
-      flash[:danger] = 'Invalid email/password combination'
+      flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
     end
   end
