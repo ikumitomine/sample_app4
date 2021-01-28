@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params) # =params[:user] = 入力した情報のハッシュ形式
     if @user.save
+      log_in @user
       flash[:success] = "Wlcome to the Sample App!"
       redirect_to @user
     else
